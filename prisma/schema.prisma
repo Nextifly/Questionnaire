@@ -1,0 +1,529 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // укажите вашу целевую СУБД (postgresql, mysql, sqlite)
+  url = env("DATABASE_URL")
+}
+
+/// 1. МОДЕЛЬ АНКЕТЫ (Плоская структура из всех переданных пунктов)
+model Questionnaire {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // === БЛОК КРИТЕРИЕВ АНКЕТЫ (215 ФИКСИРОВАННЫХ ПОЛЕЙ) ===
+  c001_nazvanie_mestorozhdeniya                 String?
+  c002_operator_nedropolzovatel                 String?
+  c003_region_basseyn_klaster                   String?
+  c004_status_licenzii_kontrakta                String?
+  c005_stadiya_razrabotki                       String?
+  c006_produktivnyy_gorizont_obekt_razrabotki   String?
+  c007_blok_sektor_kust                         String?
+  c008_dostupnost_ploschadki_i_sezonnost        String?
+  c009_ekologicheskie_i_sanitarnye_ogranicheniya String?
+  c010_data_i_versiya_ishodnyh_dannyh           String?
+  c011_tip_kollektora                           String?
+  c012_dominiruyuschaya_litologiya              String?
+  c013_tip_lovushki                             String?
+  c014_strukturnaya_slozhnost                   String?
+  c015_razlomnost_i_blokovost                   String?
+  c016_nalichie_estestvennoy_treschinovatosti   String?
+  c017_provodimost_i_orientaciya_treschin       String?
+  c018_facialnaya_izmenchivost                  String?
+  c019_kolichestvo_produktivnyh_plastov_proplastkov String?
+  c020_gidrodinamicheskaya_svyaznost_plastov     String?
+  c021_glubina_zaleganiya                       String?
+  c022_obschaya_tolschina_plasta                String?
+  c023_effektivnaya_neftenasyschennaya_tolschina String?
+  c024_ploschad_produktivnosti                  String?
+  c025_polozhenie_vnk_gnk                       String?
+  c026_tip_i_aktivnost_vodonosnoy_sistemy       String?
+  c027_nalichie_i_aktivnost_gazovoy_shapki      String?
+  c028_risk_neuchtennyh_linz_i_tupikovyh_zon    String?
+  c029_poristost                                String?
+  c030_pronicaemost                             String?
+  c031_vertikalnaya_gorizontalnaya_pronicaemost_kv_kh String?
+  c032_net_to_gross                             String?
+  c033_nachalnaya_neftenasyschennost            String?
+  c034_tekuschaya_neftenasyschennost            String?
+  c035_svyazannaya_vodonasyschennost_swi        String?
+  c036_ostatochnaya_neftenasyschennost_sor      String?
+  c037_otnositelnye_fazovye_pronicaemosti       String?
+  c038_kapillyarnoe_davlenie                    String?
+  c039_smachivaemost_porody                     String?
+  c040_szhimaemost_porody                       String?
+  c041_glinistost_i_nabuhanie                   String?
+  c042_karbonatnost_kislotorastvorimost         String?
+  c043_razmer_porovyh_kanalov_chuvstvitelnost_k_polimeru String?
+  c044_indeks_neodnorodnosti_po_pronicaemosti   String?
+  c045_risk_peskoproyavleniya                   String?
+  c046_plotnost_nefti_api                       String?
+  c047_vyazkost_nefti_v_plastovyh_usloviyah     String?
+  c048_vyazkost_nefti_na_poverhnosti            String?
+  c049_temperatura_zastyvaniya_tekuchesti       String?
+  c050_soderzhanie_parafinov                    String?
+  c051_soderzhanie_asfaltenov_i_smol            String?
+  c052_davlenie_nasyscheniya                    String?
+  c053_gazovyy_faktor                           String?
+  c054_obemnyy_koefficient_nefti                String?
+  c055_sostav_gaza                              String?
+  c056_soderzhanie_sery_i_kislotnoe_chislo      String?
+  c057_sklonnost_k_obrazovaniyu_stoykih_emulsiy String?
+  c058_mineralizaciya_plastovoy_vody            String?
+  c059_zhestkost_vody_ca_mg_ba_sr               String?
+  c060_sklonnost_k_soleotlozheniyam             String?
+  c061_sovmestimost_plastovoy_i_zakachivaemoy_vody String?
+  c062_srb_bakterialnaya_aktivnost              String?
+  c063_stabilnost_nefti_k_co2_gazu_kislotam     String?
+  c064_plastovaya_temperatura                   String?
+  c065_nachalnye_geologicheskie_zapasy          String?
+  c066_izvlekaemye_zapasy                       String?
+  c067_ostatochnye_izvlekaemye_zapasy           String?
+  c068_fakticheskiy_kinc                        String?
+  c069_proektnyy_celevoy_kinc                   String?
+  c070_razryv_fakticheskogo_i_proektnogo_kinc   String?
+  c071_stepen_vyrabotannosti_zapasov            String?
+  c072_raspredelenie_ostatochnoy_nefti          String?
+  c073_potencial_bypassed_oil                   String?
+  c074_dostovernost_kategorii_zapasov           String?
+  c075_obemnyy_ohvat_vytesneniem                String?
+  c076_koefficient_vytesneniya                  String?
+  c077_zrelost_zavodneniya                      String?
+  c078_dolya_trudnoizvlekaemyh_zapasov          String?
+  c079_nachalnoe_plastovoe_davlenie             String?
+  c080_tekuschee_plastovoe_davlenie             String?
+  c081_temp_padeniya_davleniya                  String?
+  c082_davlenie_otnositelno_davleniya_nasyscheniya String?
+  c083_rezhim_zalezhi                           String?
+  c084_srednyaya_depressiya_na_plast            String?
+  c085_davlenie_razryva_gradient_treschinoobrazovaniya String?
+  c086_davlencheskaya_soobschaemost_skvazhin     String?
+  c087_hthp_sour_usloviya                       String?
+  c088_tip_sistemy_razrabotki                   String?
+  c089_plotnost_setki_skvazhin                  String?
+  c090_rasstoyanie_dobyvayuschaya_nagnetatelnaya String?
+  c091_kolichestvo_deystvuyuschih_dobyvayuschih_skvazhin String?
+  c092_kolichestvo_deystvuyuschih_nagnetatelnyh_skvazhin String?
+  c093_dolya_bezdeystvuyuschego_i_zakonservirovannogo_fon String?
+  c094_vozrast_fonda                            String?
+  c095_tip_zakanchivaniya                       String?
+  c096_intervaly_perforacii_otnositelno_nnt_vnk String?
+  c097_kachestvo_cementirovaniya                String?
+  c098_sostoyanie_ekspluatacionnoy_kolonny      String?
+  c099_nalichie_i_kachestvo_gs_zbs              String?
+  c100_vozmozhnost_razdelnoy_ekspluatacii_zakachki String?
+  c101_tip_mehanizirovannoy_dobychi             String?
+  c102_ogranicheniya_po_komponovke_gno          String?
+  c103_dostupnost_krs_prs_koiltyubingaa         String?
+  c104_tekuschiy_debit_nefti                    String?
+  c105_tekuschiy_debit_zhidkosti                String?
+  c106_obvodnennost_produkcii                   String?
+  c107_trend_obvodnennosti                      String?
+  c108_temp_padeniya_dobychi_nefti              String?
+  c109_nakoplennaya_dobycha_nefti_i_zhidkosti   String?
+  c110_indeks_produktivnosti_pi                 String?
+  c111_skin_faktor_zagryaznenie_pzp             String?
+  c112_koefficient_ekspluatacii_prostoy_fonda   String?
+  c113_chastota_remontov_i_otkazov              String?
+  c114_energoeffektivnost_podema_zhidkosti      String?
+  c115_gazovoe_vliyanie_na_nasosy               String?
+  c116_mehanicheskie_primesi_v_dobyche          String?
+  c117_kategoriya_skvazhin_po_potencialu        String?
+  c118_nalichie_sistemy_ppd                     String?
+  c119_istochnik_zakachivaemoy_vody             String?
+  c120_obem_zakachki_vody                       String?
+  c121_koefficient_kompensacii_otborov          String?
+  c122_priemistost_nagnetatelnyh_skvazhin       String?
+  c123_davlenie_zakachki                        String?
+  c124_profil_priemistosti_po_intervalam        String?
+  c125_kachestvo_zakachivaemoy_vody             String?
+  c126_balans_zakachki_po_blokam_pattern        String?
+  c127_trassernaya_svyaz_nagnetatel_dobyvayuschaya String?
+  c128_ploschadnoy_ohvat_zavodneniem            String?
+  c129_vertikalnyy_ohvat_zavodneniem            String?
+  c130_vozmozhnost_ciklicheskoy_nestacionarnoy_zakachki String?
+  c131_sovmestimost_s_polimerom_pav_gelyamic    String?
+  c132_osnovnoy_istochnik_vody                  String?
+  c133_dolya_zakachivaemoy_vody_v_dobyche       String?
+  c134_risk_vodyanogo_konusa                    String?
+  c135_risk_proryva_kraevoy_konturnoy_vody      String?
+  c136_risk_zakolonnogo_peretoka_vody_gaza      String?
+  c137_risk_kanalizacii_zakachki                String?
+  c138_water_cut_vs_drawdown                    String?
+  c139_risk_gazovogo_konusa_gazovogo_proryva    String?
+  c140_moschnost_podgotovki_po_vode             String?
+  c141_stoimost_obrascheniya_s_vodoy            String?
+  c142_nalichie_source_of_water_diagnostiki     String?
+  c143_tehnicheskaya_vozmozhnost_otsecheniya_vody String?
+  c144_risk_aspo_v_stvole_pzp_linii             String?
+  c145_risk_soleotlozheniy_v_skvazhinah_i_pzp   String?
+  c146_korrozionnaya_aktivnost_sredy            String?
+  c147_risk_biokorrozii_i_souring               String?
+  c148_problemy_deemulsacii                     String?
+  c149_fakt_vynosa_peska                        String?
+  c150_tverdye_chasticy_v_vode_ppd              String?
+  c151_risk_gidratoobrazovaniyana               String?
+  c152_teplopoteri_i_risk_ohlazhdeniya_produkcii String?
+  c153_shlamy_i_smeshannye_otlozheniya          String?
+  c154_propusknaya_sposobnost_sistemy_sbora     String?
+  c155_moschnost_podgotovki_nefti               String?
+  c156_moschnost_vodopodgotovki_i_zakachki      String?
+  c157_elektroenergeticheskie_ogranicheniya     String?
+  c158_sostoyanie_truboprovodov                 String?
+  c159_dostupnost_dorog_i_transporta_reagentov  String?
+  c160_utilizaciya_i_ispolzovanie_poputnogo_gaza String?
+  c161_dostupnost_tepla_para_topliva            String?
+  c162_dostupnost_laboratornoy_bazy             String?
+  c163_uchet_i_telemetriya_na_promysle          String?
+  c164_hranenie_i_dozirovanie_himii             String?
+  c165_limity_sbrosa_utilizacii_vody_i_emissiy  String?
+  c166_polnota_istorii_dobychi_i_zakachki       String?
+  c167_nalichie_i_kachestvo_gis                 String?
+  c168_nalichie_kerna_i_scal                    String?
+  c169_nalichie_aktualnogo_pvt                  String?
+  c170_nalichie_gdis_well_tests                 String?
+  c171_nalichie_plt_profilya_pritoka_i_priemistosti String?
+  c172_nalichie_c_o_ili_rigis_cherez_kolonnu    String?
+  c173_nalichie_akc_cbl_vdl_termo_shum          String?
+  c174_nalichie_trassernyh_issledovaniy         String?
+  c175_nalichie_i_kachestvo_seysmiki            String?
+  c176_aktualnost_geologicheskoy_modeli         String?
+  c177_kachestvo_gidrodinamicheskoy_modeli      String?
+  c178_set_regulyarnogo_zamera_davleniy         String?
+  c179_reyting_nadezhnosti_dannyh               String?
+  c180_nalichie_data_room_i_versionnosti        String?
+  c181_nalichie_arhiva_gtm_i_post_audit         String?
+  c182_netback_cena_realizacii                  String?
+  c183_opex_dobychi_nefti                       String?
+  c184_opex_vody                                String?
+  c185_stoimost_elektroenergii_i_topliva        String?
+  c186_capex_limit_na_reshenie_pilot            String?
+  c187_trebuemyy_srok_okupaemosti               String?
+  c188_minimalnyy_ekonomicheskiy_debit_nefti    String?
+  c189_ekonomicheskiy_predel_obvodnennosti      String?
+  c190_gotovnost_k_pilotu                       String?
+  c191_dostupnost_servisa_i_materialov          String?
+  c192_hse_risk_resheniy                        String?
+  c193_regulyatornaya_gotovnost                 String?
+  c194_kpi_pilota                               String?
+  c195_stop_loss_kriterii                       String?
+  c196_potencial_tirazhirovaniya                String?
+  c197_otvetstvennyy_vladelec_resheniya         String?
+  c198_kategoriya_mestorozhdeniya_obekta        String?
+  c199_glavnyy_problemnyy_mehanizm              String?
+  c200_prioritet_obekta_v_portfele              String?
+  c201_data_readiness                           String?
+  c202_technology_fit_trl_fit                   String?
+  c203_pervyy_gorizont_rabot                    String?
+  c204_krasnye_flagi_dlya_resheniy              String?
+  c205_predpochtitelnyy_klass_resheniy          String?
+  c206_investicionnaya_korzina                  String?
+  c207_chastota_peresmotra_kriteriev            String?
+  c208_istoriya_gtm_operaciy                    String?
+  c209_primenennaya_planiruemaya_tehnologiya    String?
+  c210_rasshirennaya_himiya_vody_gaza           String?
+  c211_fazovoe_povedenie_mun                    String?
+  c212_detali_zakanchivaniya_oborudovaniya      String?
+  c213_geomehanika_prochnost_porody             String?
+  c214_tip_porovogo_prostranstva                String?
+  c215_reagenty_materialy_sovmestimost          String?
+
+  @@map("questionnaires")
+}
+
+model Problems {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  problem_name String @unique
+  summary String
+  negative_results String
+  conditions_raw String
+  mapping_status String? @default("STRICT_READY")
+  solutions String[]
+
+  atoms_total      Int?  @default(0)
+  atoms_strict     Int? @default(0)
+  atoms_review     Int? @default(0)
+  atoms_unmapped   Int? @default(0)
+  review_atoms     Int? @default(0)
+  unmapped_atoms   Int? @default(0)
+
+  impact_kin       Int? @default(0)
+  impact_oil       Int? @default(0)
+  impact_watercut  Int? @default(0)
+  impact_cost      Int? @default(0)
+  impact_env       Int? @default(0)
+  impact_total     Int? @default(0)
+
+  // === БЛОК КРИТЕРИЕВ АНКЕТЫ (215 ФИКСИРОВАННЫХ ПОЛЕЙ) ===
+  c001_nazvanie_mestorozhdeniya                 String[]
+  c002_operator_nedropolzovatel                 String[]
+  c003_region_basseyn_klaster                   String[]
+  c004_status_licenzii_kontrakta                String[]
+  c005_stadiya_razrabotki                       String[]
+  c006_produktivnyy_gorizont_obekt_razrabotki   String[]
+  c007_blok_sektor_kust                         String[]
+  c008_dostupnost_ploschadki_i_sezonnost        String[]
+  c009_ekologicheskie_i_sanitarnye_ogranicheniya String[]
+  c010_data_i_versiya_ishodnyh_dannyh           String[]
+  c011_tip_kollektora                           String[]
+  c012_dominiruyuschaya_litologiya              String[]
+  c013_tip_lovushki                             String[]
+  c014_strukturnaya_slozhnost                   String[]
+  c015_razlomnost_i_blokovost                   String[]
+  c016_nalichie_estestvennoy_treschinovatosti   String[]
+  c017_provodimost_i_orientaciya_treschin       String[]
+  c018_facialnaya_izmenchivost                  String[]
+  c019_kolichestvo_produktivnyh_plastov_proplastkov String[]
+  c020_gidrodinamicheskaya_svyaznost_plastov     String[]
+  c021_glubina_zaleganiya                       String[]
+  c022_obschaya_tolschina_plasta                String[]
+  c023_effektivnaya_neftenasyschennaya_tolschina String[]
+  c024_ploschad_produktivnosti                  String[]
+  c025_polozhenie_vnk_gnk                       String[]
+  c026_tip_i_aktivnost_vodonosnoy_sistemy       String[]
+  c027_nalichie_i_aktivnost_gazovoy_shapki      String[]
+  c028_risk_neuchtennyh_linz_i_tupikovyh_zon    String[]
+  c029_poristost                                String[]
+  c030_pronicaemost                             String[]
+  c031_vertikalnaya_gorizontalnaya_pronicaemost_kv_kh String[]
+  c032_net_to_gross                             String[]
+  c033_nachalnaya_neftenasyschennost            String[]
+  c034_tekuschaya_neftenasyschennost            String[]
+  c035_svyazannaya_vodonasyschennost_swi        String[]
+  c036_ostatochnaya_neftenasyschennost_sor      String[]
+  c037_otnositelnye_fazovye_pronicaemosti       String[]
+  c038_kapillyarnoe_davlenie                    String[]
+  c039_smachivaemost_porody                     String[]
+  c040_szhimaemost_porody                       String[]
+  c041_glinistost_i_nabuhanie                   String[]
+  c042_karbonatnost_kislotorastvorimost         String[]
+  c043_razmer_porovyh_kanalov_chuvstvitelnost_k_polimeru String[]
+  c044_indeks_neodnorodnosti_po_pronicaemosti   String[]
+  c045_risk_peskoproyavleniya                   String[]
+  c046_plotnost_nefti_api                       String[]
+  c047_vyazkost_nefti_v_plastovyh_usloviyah     String[]
+  c048_vyazkost_nefti_na_poverhnosti            String[]
+  c049_temperatura_zastyvaniya_tekuchesti       String[]
+  c050_soderzhanie_parafinov                    String[]
+  c051_soderzhanie_asfaltenov_i_smol            String[]
+  c052_davlenie_nasyscheniya                    String[]
+  c053_gazovyy_faktor                           String[]
+  c054_obemnyy_koefficient_nefti                String[]
+  c055_sostav_gaza                              String[]
+  c056_soderzhanie_sery_i_kislotnoe_chislo      String[]
+  c057_sklonnost_k_obrazovaniyu_stoykih_emulsiy String[]
+  c058_mineralizaciya_plastovoy_vody            String[]
+  c059_zhestkost_vody_ca_mg_ba_sr               String[]
+  c060_sklonnost_k_soleotlozheniyam             String[]
+  c061_sovmestimost_plastovoy_i_zakachivaemoy_vody String[]
+  c062_srb_bakterialnaya_aktivnost              String[]
+  c063_stabilnost_nefti_k_co2_gazu_kislotam     String[]
+  c064_plastovaya_temperatura                   String[]
+  c065_nachalnye_geologicheskie_zapasy          String[]
+  c066_izvlekaemye_zapasy                       String[]
+  c067_ostatochnye_izvlekaemye_zapasy           String[]
+  c068_fakticheskiy_kinc                        String[]
+  c069_proektnyy_celevoy_kinc                   String[]
+  c070_razryv_fakticheskogo_i_proektnogo_kinc   String[]
+  c071_stepen_vyrabotannosti_zapasov            String[]
+  c072_raspredelenie_ostatochnoy_nefti          String[]
+  c073_potencial_bypassed_oil                   String[]
+  c074_dostovernost_kategorii_zapasov           String[]
+  c075_obemnyy_ohvat_vytesneniem                String[]
+  c076_koefficient_vytesneniya                  String[]
+  c077_zrelost_zavodneniya                      String[]
+  c078_dolya_trudnoizvlekaemyh_zapasov          String[]
+  c079_nachalnoe_plastovoe_davlenie             String[]
+  c080_tekuschee_plastovoe_davlenie             String[]
+  c081_temp_padeniya_davleniya                  String[]
+  c082_davlenie_otnositelno_davleniya_nasyscheniya String[]
+  c083_rezhim_zalezhi                           String[]
+  c084_srednyaya_depressiya_na_plast            String[]
+  c085_davlenie_razryva_gradient_treschinoobrazovaniya String[]
+  c086_davlencheskaya_soobschaemost_skvazhin     String[]
+  c087_hthp_sour_usloviya                       String[]
+  c088_tip_sistemy_razrabotki                   String[]
+  c089_plotnost_setki_skvazhin                  String[]
+  c090_rasstoyanie_dobyvayuschaya_nagnetatelnaya String[]
+  c091_kolichestvo_deystvuyuschih_dobyvayuschih_skvazhin String[]
+  c092_kolichestvo_deystvuyuschih_nagnetatelnyh_skvazhin String[]
+  c093_dolya_bezdeystvuyuschego_i_zakonservirovannogo_fon String[]
+  c094_vozrast_fonda                            String[]
+  c095_tip_zakanchivaniya                       String[]
+  c096_intervaly_perforacii_otnositelno_nnt_vnk String[]
+  c097_kachestvo_cementirovaniya                String[]
+  c098_sostoyanie_ekspluatacionnoy_kolonny      String[]
+  c099_nalichie_i_kachestvo_gs_zbs              String[]
+  c100_vozmozhnost_razdelnoy_ekspluatacii_zakachki String[]
+  c101_tip_mehanizirovannoy_dobychi             String[]
+  c102_ogranicheniya_po_komponovke_gno          String[]
+  c103_dostupnost_krs_prs_koiltyubingaa         String[]
+  c104_tekuschiy_debit_nefti                    String[]
+  c105_tekuschiy_debit_zhidkosti                String[]
+  c106_obvodnennost_produkcii                   String[]
+  c107_trend_obvodnennosti                      String[]
+  c108_temp_padeniya_dobychi_nefti              String[]
+  c109_nakoplennaya_dobycha_nefti_i_zhidkosti   String[]
+  c110_indeks_produktivnosti_pi                 String[]
+  c111_skin_faktor_zagryaznenie_pzp             String[]
+  c112_koefficient_ekspluatacii_prostoy_fonda   String[]
+  c113_chastota_remontov_i_otkazov              String[]
+  c114_energoeffektivnost_podema_zhidkosti      String[]
+  c115_gazovoe_vliyanie_na_nasosy               String[]
+  c116_mehanicheskie_primesi_v_dobyche          String[]
+  c117_kategoriya_skvazhin_po_potencialu        String[]
+  c118_nalichie_sistemy_ppd                     String[]
+  c119_istochnik_zakachivaemoy_vody             String[]
+  c120_obem_zakachki_vody                       String[]
+  c121_koefficient_kompensacii_otborov          String[]
+  c122_priemistost_nagnetatelnyh_skvazhin       String[]
+  c123_davlenie_zakachki                        String[]
+  c124_profil_priemistosti_po_intervalam        String[]
+  c125_kachestvo_zakachivaemoy_vody             String[]
+  c126_balans_zakachki_po_blokam_pattern        String[]
+  c127_trassernaya_svyaz_nagnetatel_dobyvayuschaya String[]
+  c128_ploschadnoy_ohvat_zavodneniem            String[]
+  c129_vertikalnyy_ohvat_zavodneniem            String[]
+  c130_vozmozhnost_ciklicheskoy_nestacionarnoy_zakachki String[]
+  c131_sovmestimost_s_polimerom_pav_gelyamic    String[]
+  c132_osnovnoy_istochnik_vody                  String[]
+  c133_dolya_zakachivaemoy_vody_v_dobyche       String[]
+  c134_risk_vodyanogo_konusa                    String[]
+  c135_risk_proryva_kraevoy_konturnoy_vody      String[]
+  c136_risk_zakolonnogo_peretoka_vody_gaza      String[]
+  c137_risk_kanalizacii_zakachki                String[]
+  c138_water_cut_vs_drawdown                    String[]
+  c139_risk_gazovogo_konusa_gazovogo_proryva    String[]
+  c140_moschnost_podgotovki_po_vode             String[]
+  c141_stoimost_obrascheniya_s_vodoy            String[]
+  c142_nalichie_source_of_water_diagnostiki     String[]
+  c143_tehnicheskaya_vozmozhnost_otsecheniya_vody String[]
+  c144_risk_aspo_v_stvole_pzp_linii             String[]
+  c145_risk_soleotlozheniy_v_skvazhinah_i_pzp   String[]
+  c146_korrozionnaya_aktivnost_sredy            String[]
+  c147_risk_biokorrozii_i_souring               String[]
+  c148_problemy_deemulsacii                     String[]
+  c149_fakt_vynosa_peska                        String[]
+  c150_tverdye_chasticy_v_vode_ppd              String[]
+  c151_risk_gidratoobrazovaniyana               String[]
+  c152_teplopoteri_i_risk_ohlazhdeniya_produkcii String[]
+  c153_shlamy_i_smeshannye_otlozheniya          String[]
+  c154_propusknaya_sposobnost_sistemy_sbora     String[]
+  c155_moschnost_podgotovki_nefti               String[]
+  c156_moschnost_vodopodgotovki_i_zakachki      String[]
+  c157_elektroenergeticheskie_ogranicheniya     String[]
+  c158_sostoyanie_truboprovodov                 String[]
+  c159_dostupnost_dorog_i_transporta_reagentov  String[]
+  c160_utilizaciya_i_ispolzovanie_poputnogo_gaza String[]
+  c161_dostupnost_tepla_para_topliva            String[]
+  c162_dostupnost_laboratornoy_bazy             String[]
+  c163_uchet_i_telemetriya_na_promysle          String[]
+  c164_hranenie_i_dozirovanie_himii             String[]
+  c165_limity_sbrosa_utilizacii_vody_i_emissiy  String[]
+  c166_polnota_istorii_dobychi_i_zakachki       String[]
+  c167_nalichie_i_kachestvo_gis                 String[]
+  c168_nalichie_kerna_i_scal                    String[]
+  c169_nalichie_aktualnogo_pvt                  String[]
+  c170_nalichie_gdis_well_tests                 String[]
+  c171_nalichie_plt_profilya_pritoka_i_priemistosti String[]
+  c172_nalichie_c_o_ili_rigis_cherez_kolonnu    String[]
+  c173_nalichie_akc_cbl_vdl_termo_shum          String[]
+  c174_nalichie_trassernyh_issledovaniy         String[]
+  c175_nalichie_i_kachestvo_seysmiki            String[]
+  c176_aktualnost_geologicheskoy_modeli         String[]
+  c177_kachestvo_gidrodinamicheskoy_modeli      String[]
+  c178_set_regulyarnogo_zamera_davleniy         String[]
+  c179_reyting_nadezhnosti_dannyh               String[]
+  c180_nalichie_data_room_i_versionnosti        String[]
+  c181_nalichie_arhiva_gtm_i_post_audit         String[]
+  c182_netback_cena_realizacii                  String[]
+  c183_opex_dobychi_nefti                       String[]
+  c184_opex_vody                                String[]
+  c185_stoimost_elektroenergii_i_topliva        String[]
+  c186_capex_limit_na_reshenie_pilot            String[]
+  c187_trebuemyy_srok_okupaemosti               String[]
+  c188_minimalnyy_ekonomicheskiy_debit_nefti    String[]
+  c189_ekonomicheskiy_predel_obvodnennosti      String[]
+  c190_gotovnost_k_pilotu                       String[]
+  c191_dostupnost_servisa_i_materialov          String[]
+  c192_hse_risk_resheniy                        String[]
+  c193_regulyatornaya_gotovnost                 String[]
+  c194_kpi_pilota                               String[]
+  c195_stop_loss_kriterii                       String[]
+  c196_potencial_tirazhirovaniya                String[]
+  c197_otvetstvennyy_vladelec_resheniya         String[]
+  c198_kategoriya_mestorozhdeniya_obekta        String[]
+  c199_glavnyy_problemnyy_mehanizm              String[]
+  c200_prioritet_obekta_v_portfele              String[]
+  c201_data_readiness                           String[]
+  c202_technology_fit_trl_fit                   String[]
+  c203_pervyy_gorizont_rabot                    String[]
+  c204_krasnye_flagi_dlya_resheniy              String[]
+  c205_predpochtitelnyy_klass_resheniy          String[]
+  c206_investicionnaya_korzina                  String[]
+  c207_chastota_peresmotra_kriteriev            String[]
+  c208_istoriya_gtm_operaciy                    String[]
+  c209_primenennaya_planiruemaya_tehnologiya    String[]
+  c210_rasshirennaya_himiya_vody_gaza           String[]
+  c211_fazovoe_povedenie_mun                    String[]
+  c212_detali_zakanchivaniya_oborudovaniya      String[]
+  c213_geomehanika_prochnost_porody             String[]
+  c214_tip_porovogo_prostranstva                String[]
+  c215_reagenty_materialy_sovmestimost          String[]
+
+  @@map("problems")
+}
+
+model Solutions {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  solution_code String @unique
+
+  class        String
+  name         String
+  country      String
+  description  String
+  phisics_and_chemistry String
+
+  target_problem String?
+  quantitative_effect_min String?
+  quantitative_effect_max String?
+
+  kin_increase_min Float?
+  kin_increase_max Float?
+
+  oil_production_growth_min Float?
+  oil_production_growth_max Float?
+
+  watercut_reduction_min Float?
+  watercut_reduction_max Float?
+
+  cost_reduction_min Float?
+  cost_reduction_max Float?
+
+  env_impact_reduction_min Float?
+  env_impact_reduction_max Float?
+
+  implementation_cost String?
+  validation_metrics String?
+
+  impact_kin Int?
+  impact_oil Int?
+  impact_watercut Int?
+  impact_cost Int?
+  impact_env Int?
+
+  integrated_score Float?
+
+  applicability_conditions String?
+  risks_limitations String?
+  readiness String?
+
+  @@map("solutions")
+}
